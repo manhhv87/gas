@@ -210,19 +210,19 @@ def model_run(model_name, transfer, noise):
     best_test_loss, best_test_accuracy = None, None
 
     #path for model
-    if not os.path.exists('snapshot'):
-        os.mkdir('snapshot')
-    if not os.path.exists(os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer))):
-        os.mkdir(os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer)))
+    if not os.path.exists('/content/drive/MyDrive/Gass_data/snapshot'):
+        os.mkdir('/content/drive/MyDrive/Gass_data/snapshot')
+    if not os.path.exists(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer))):
+        os.mkdir(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer)))
 
     #path for results
-    if not os.path.exists('results'):
-        os.mkdir('results')
-    if not os.path.exists(os.path.join(os.getcwd(), 'results', '{}_{}'.format(model_name, transfer))):
-        os.mkdir(os.path.join(os.getcwd(), 'results', '{}_{}'.format(model_name, transfer)))
+    if not os.path.exists('/content/drive/MyDrive/Gass_data/results'):
+        os.mkdir('/content/drive/MyDrive/Gass_data/results')
+    if not os.path.exists(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/results', '{}_{}'.format(model_name, transfer))):
+        os.mkdir(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/results', '{}_{}'.format(model_name, transfer)))
         
     for i in range(5):
-        cv_path = 'tensor_resamples/CV_{}'.format(i)
+        cv_path = '/content/drive/MyDrive/Gass_data/tensor_resamples/CV_{}'.format(i)
         print('Cross-Validation with {}'.format(cv_path))
         
         all_file_list = []
@@ -238,11 +238,11 @@ def model_run(model_name, transfer, noise):
             all_tensor_list.append(np.array([split, label, file_path]))
         all_tensor_array = np.array(all_tensor_list)
 
-        train_tensor_array = all_tensor_array[all_tensor_array[:,0]=='train']
-        valid_tensor_array = all_tensor_array[all_tensor_array[:,0]=='valid']
-        test_tensor_array = all_tensor_array[all_tensor_array[:,0]=='test']
+        train_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'train']
+        valid_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'valid']
+        test_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'test']
         
-        class_weights = torch.FloatTensor(pd.value_counts(train_tensor_array[:,1], normalize = True).sort_index())
+        class_weights = torch.FloatTensor(pd.value_counts(train_tensor_array[:,1], normalize=True).sort_index())
         class_weights = torch.FloatTensor([1/w for w in class_weights])
         class_weights = class_weights/class_weights.sum()
         
@@ -271,7 +271,7 @@ def model_run(model_name, transfer, noise):
         # Train and Evaluate Model
         model.to(device)
         optimizer = optim.Adam(model.parameters(), lr=1e-6, weight_decay=1e-8)
-        criterion = nn.CrossEntropyLoss(weight = class_weights.to(device))
+        criterion = nn.CrossEntropyLoss(weight=class_weights.to(device))
         # lr scheduler 
         scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5)
         
@@ -316,25 +316,25 @@ def model_run(model_name, transfer, noise):
             if not best_valid_loss or valid_loss < best_valid_loss:
                 #out_name = str('model_weight_{:0.2f}_{}.pt'.format(noise, i))
                 out_name = 'model_weight_{:0.2f}.pt'.format(noise)
-                torch.save(model.state_dict(), os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer), out_name))
+                torch.save(model.state_dict(), os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer), out_name))
                 best_valid_loss = valid_loss
      
             # Decay Learning Rate
             scheduler.step()
                 
-        trained_weight = os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer), out_name)
+        trained_weight = os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer), out_name)
         state_dict = torch.load(trained_weight)
         model.load_state_dict(state_dict)
         test_loss, test_accuracy, true_list, pred_list = evaluate(model, criterion, test_batch)
         print("\n test loss : %5.5f | test accuracy : %5.5f" % (test_loss, test_accuracy))
         
-        test_result_path = os.path.join(os.getcwd(), 'results', '{}_{}'.format(model_name, transfer), str('test_result_{:0.2f}_{}.pkl'.format(noise, i)))
+        test_result_path = os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/results', '{}_{}'.format(model_name, transfer), str('test_result_{:0.2f}_{}.pkl'.format(noise, i)))
         with open(test_result_path, 'wb') as f:
             pickle.dump([test_loss, test_accuracy, true_list, pred_list], f)
         
         if not best_test_loss or test_loss < best_test_loss:
             out_name = 'model_weight_{:0.2f}_best.pt'.format(noise)
-            torch.save(model.state_dict(), os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer), out_name))
+            torch.save(model.state_dict(), os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer), out_name))
             best_test_loss = test_loss
             print('\t {} saved'.format(out_name))
 
