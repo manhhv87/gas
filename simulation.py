@@ -230,7 +230,7 @@ def model_run(model_name, transfer, noise):
             for file in files:
                 all_file_list.append(os.path.join(root, file))
 
-        print(all_file_list)
+        # print(all_file_list)
 
         all_tensor_list = []
         for file_path in all_file_list:
@@ -239,7 +239,7 @@ def model_run(model_name, transfer, noise):
             label = file_path.split('/')[4]
             all_tensor_list.append(np.array([split, label, file_path]))
 
-        print(all_tensor_list)
+        # print(all_tensor_list)
 
         all_tensor_array = np.array(all_tensor_list)
 
