@@ -245,11 +245,11 @@ def model_run(model_name, transfer, noise):
 
         # print(all_tensor_array)
 
-        print(all_tensor_array[:,0])
+        print(all_tensor_array[:,5])
 
-        train_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'train']
-        valid_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'valid']
-        test_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'test']
+        train_tensor_array = all_tensor_array[all_tensor_array[:,5] == 'train']
+        valid_tensor_array = all_tensor_array[all_tensor_array[:,5] == 'valid']
+        test_tensor_array = all_tensor_array[all_tensor_array[:,5] == 'test']
 
 
         
