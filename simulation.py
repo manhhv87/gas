@@ -245,7 +245,7 @@ def model_run(model_name, transfer, noise):
 
         # print(all_tensor_array)
 
-        print(all_tensor_array.size())
+        print(all_tensor_array.shap())
 
         train_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'train']
         valid_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'valid']
