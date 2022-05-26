@@ -256,6 +256,8 @@ def model_run(model_name, transfer, noise):
         valid_sensor_dataset = SensorDataset(valid_tensor_array, image_transform)
         test_sensor_dataset = SensorDataset(test_tensor_array, image_transform)
 
+        print(train_sensor_dataset)
+
         BATCH_SIZE = 4
         train_batch = DataLoader(train_sensor_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
         valid_batch = DataLoader(valid_sensor_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=False)
