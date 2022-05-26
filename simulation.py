@@ -230,13 +230,20 @@ def model_run(model_name, transfer, noise):
             for file in files:
                 all_file_list.append(os.path.join(root, file))
 
+        print(all_file_list)
+
         all_tensor_list = []
         for file_path in all_file_list:
             #noise = file_path.split('/')[2]
             split = file_path.split('/')[3]
             label = file_path.split('/')[4]
             all_tensor_list.append(np.array([split, label, file_path]))
+
+        print(all_tensor_list)
+
         all_tensor_array = np.array(all_tensor_list)
+
+        print(all_tensor_array)
 
         train_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'train']
         valid_tensor_array = all_tensor_array[all_tensor_array[:,0] == 'valid']
@@ -255,8 +262,6 @@ def model_run(model_name, transfer, noise):
         train_sensor_dataset = SensorDataset(train_tensor_array, image_transform)
         valid_sensor_dataset = SensorDataset(valid_tensor_array, image_transform)
         test_sensor_dataset = SensorDataset(test_tensor_array, image_transform)
-
-        print(train_sensor_dataset)
 
         BATCH_SIZE = 4
         train_batch = DataLoader(train_sensor_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
