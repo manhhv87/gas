@@ -210,19 +210,19 @@ def model_run(model_name, transfer, noise):
     best_test_loss, best_test_accuracy = None, None
 
     #path for model
-    if not os.path.exists('/content/drive/MyDrive/Gass_data/snapshot'):
-        os.mkdir('/content/drive/MyDrive/Gass_data/snapshot')
-    if not os.path.exists(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer))):
-        os.mkdir(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/snapshot', '{}_{}'.format(model_name, transfer)))
+    if not os.path.exists('snapshot'):
+        os.mkdir('snapshot')
+    if not os.path.exists(os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer))):
+        os.mkdir(os.path.join(os.getcwd(), 'snapshot', '{}_{}'.format(model_name, transfer)))
 
     #path for results
-    if not os.path.exists('/content/drive/MyDrive/Gass_data/results'):
-        os.mkdir('/content/drive/MyDrive/Gass_data/results')
-    if not os.path.exists(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/results', '{}_{}'.format(model_name, transfer))):
-        os.mkdir(os.path.join(os.getcwd(), '/content/drive/MyDrive/Gass_data/results', '{}_{}'.format(model_name, transfer)))
+    if not os.path.exists('results'):
+        os.mkdir('results')
+    if not os.path.exists(os.path.join(os.getcwd(), 'results', '{}_{}'.format(model_name, transfer))):
+        os.mkdir(os.path.join(os.getcwd(), 'results', '{}_{}'.format(model_name, transfer)))
         
     for i in range(5):
-        cv_path = '/content/drive/MyDrive/Gass_data/tensor_resamples/CV_{}'.format(i)
+        cv_path = 'tensor_resamples/CV_{}'.format(i)
         print('Cross-Validation with {}'.format(cv_path))
         
         all_file_list = []
