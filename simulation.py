@@ -243,14 +243,10 @@ def model_run(model_name, transfer, noise):
 
         all_tensor_array = np.array(all_tensor_list)
 
-        print(all_tensor_array)
+        train_tensor_array = all_tensor_array[all_tensor_array[:, 0] == 'train']
+        valid_tensor_array = all_tensor_array[all_tensor_array[:, 0] == 'valid']
+        test_tensor_array = all_tensor_array[all_tensor_array[:, 0] == 'test']
 
-        train_tensor_array = all_tensor_array[all_tensor_array[:,2][:,5] == 'train']
-        valid_tensor_array = all_tensor_array[all_tensor_array[:,2][:,5] == 'valid']
-        test_tensor_array = all_tensor_array[all_tensor_array[:,2][:,5] == 'test']
-
-
-        
         class_weights = torch.FloatTensor(pd.value_counts(train_tensor_array[:,1], normalize=True).sort_index())
         class_weights = torch.FloatTensor([1/w for w in class_weights])
         class_weights = class_weights/class_weights.sum()
