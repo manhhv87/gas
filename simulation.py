@@ -311,7 +311,7 @@ def model_run(model_name, transfer, noise):
                 if abs(valid_loss - prev_valid_loss) / prev_valid_loss < 0.01:
                     early_stopping_cnt += 1
                     if early_stopping_cnt == 5:
-                        #print("Early stopping at epoch {}".format(e))
+                        print("Early stopping at epoch {}".format(e))
                         break
                 else:
                     early_stopping_cnt = 0 
