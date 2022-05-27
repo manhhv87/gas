@@ -290,7 +290,7 @@ def model_run(model_name, transfer, noise):
 
         for e in range(0, EPOCHS):
             train_loss, train_accuracy = train(model, optimizer, criterion, train_batch)
-            #print("[Epoch: %02d] train loss : %5.5f | train accuracy : %5.5f" % (e+1, train_loss, train_accuracy))
+            print("[Epoch: %02d] train loss : %5.5f | train accuracy : %5.5f" % (e+1, train_loss, train_accuracy))
 
             train_loss, train_accuracy, _ ,_  = evaluate(model, criterion, train_batch)
             #print("[Epoch: %02d] train loss : %5.5f | train accuracy : %03.3f" % (e+1, train_loss, train_accuracy))
